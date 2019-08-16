@@ -1,6 +1,7 @@
 # Utility functions
 
 # TODO cut down on imports
+# TODO add function to read in commands and auth
 import config
 import urllib.request
 import json
@@ -14,6 +15,7 @@ def chat(socket, msg):
     """
     socket.send(f"PRIVMSG #{config.CHAN} :{msg}\r\n")
 
+# TODO add unban command
 def ban(socket, user):
     """
     Ban a user
@@ -32,13 +34,13 @@ def timeout(socket, user, seconds=600):
     """
     chat(socket, f".timeout {user, seconds}")
 
-# TODO find more effective way to iteratr through JSON list only once or use JSON as oplist
+# TODO find more effective way to iterate through JSON list only once or use JSON as oplist
 # TODO review Bad Gateway as boolean
+# TODO only check the JSON file when command is issued, if connection is bad, check a backup file for mods (except)
+# TODO check if user is the channel owner
 def threadFillOplist():
     """
     Fills Oplist to distinguish moderators
-    http://tmi.twitch.tv/group/user/***CHANNEL_NAME_HERE***/chatters
-    Channel name is based off CHAN from config.py
     """
     while True:
         try:

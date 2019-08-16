@@ -21,12 +21,19 @@ def main():
 
     while True:
         response = s.recv(1024).decode("utf-8")
-        if response == "PING :tmi.twitch.tv\r\n": # Handle twitch ping to maintain connection
+        if response == "PING :tmi.twitch.tv\r\n":  # Handle twitch ping to maintain connection
             s.send("PONG :tmi.twitch.tv\r\n".encode("utf-8"))
         else:
             username = re.search(r"\w+", response).group(0)
             message = CHAT_MSG.sub("", response)
-            print(response)
+
+            # First generic commands pre FILE IO
+            if message.strip() == '!time':
+                utils.chat(s, "It is currently " + time.strftime("%I:%M %p %Z on %A, %B %d, %Y. "))
+            if message.strip() == "!messages" and utils.isAllowed(username):
+                utils.chat(s, "Please give me a follow on ")
+                utils.chat(s, "Support at ")
+        time.sleep(1)
 
 
 if __name__ == "__main__":
