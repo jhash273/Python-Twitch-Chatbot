@@ -1,5 +1,6 @@
 # Utility functions
 
+# TODO cut down on imports
 import config
 import urllib.request
 import json
@@ -8,30 +9,31 @@ import time
 def chat(socket, msg):
     """
     Send chat message to server
-    :param socket: socket to send the message (int)
-    :param msg: message to send (string)
+    :param socket: socket to send the message
+    :param msg: message to send
     """
     socket.send(f"PRIVMSG #{config.CHAN} :{msg}\r\n")
 
 def ban(socket, user):
     """
     Ban a user
-    :param socket: socket to send the ban command (int)
-    :param user: user to ban (string)
+    :param socket: socket to send the ban command
+    :param user: user to ban
     """
     chat(socket, f".ban {user}")
 
 def timeout(socket, user, seconds=600):
     """
     Time out a user
-    :param socket: socket to send the timeout command (int)
-    :param user: user to be timed out (string)
-    :param seconds: time to timout user (int) (default: 600)
+    :param socket: socket to send the timeout command
+    :param user: user to be timed out
+    :param seconds: time to timout user (default: 600)
     :return: 
     """
     chat(socket, f".timeout {user, seconds}")
 
 # TODO find more effective way to iteratr through JSON list only once or use JSON as oplist
+# TODO review Bad Gateway as boolean
 def threadFillOplist():
     """
     Fills Oplist to distinguish moderators
