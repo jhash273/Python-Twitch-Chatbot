@@ -15,7 +15,7 @@ def main():
     s.send(f"NICK {config.USER}\r\n".encode("utf-8"))
     s.send(f"JOIN #{config.CHAN}\r\n".encode("utf-8"))
 
-    CHAT_MSG = re.compile(r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :")
+    chat_msg = re.compile(r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :")
     utils.chat(s, config.CONNECT_MSG)
 
     _thread.start_new_thread(utils.threadFillOplist, ())
@@ -26,22 +26,24 @@ def main():
             s.send("PONG :tmi.twitch.tv\r\n".encode("utf-8"))
         else:
             username = re.search(r"\w+", response).group(0)
-            message = CHAT_MSG.sub("", response)
+            message = chat_msg.sub("", response)
 
-            # Open and load all chat commands
-            chat_commands = json.load(open("./commands", "r"))
+            # Open and load all chat commands.json
+            chat_commands = json.load(open("./commands.json", "r"))
 
             if message[0] == "!":
                 message = message.split(' ', 1)
                 command = message[0]
-                message = message[1]
+                bot_response = message[1]
 
-            # First generic commands pre FILE IO
+            # First generic commands.json pre FILE IO
             # if message.strip() == '!time':
             #    utils.chat(s, "It is currently " + time.strftime("%I:%M %p %Z on %A, %B %d, %Y. "))
             # if message.strip() == "!messages" and utils.isAllowed(username):
             #    utils.chat(s, "Please give me a follow on ")
             #    utils.chat(s, "Support at ")
+
+        print('test')
         time.sleep(1)
 
 

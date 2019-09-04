@@ -1,11 +1,12 @@
 # Utility functions
 
 # TODO cut down on imports
-# TODO add function to read in commands and auth
+# TODO add function to read in commands.json and auth
 import config
 import urllib.request
 import json
 import time
+
 
 def chat(socket, msg):
     """
@@ -13,7 +14,8 @@ def chat(socket, msg):
     :param socket: socket to send the message
     :param msg: message to send
     """
-    socket.send(f"PRIVMSG #{config.CHAN} :{msg}\r\n")
+    socket.send(f"PRIVMSG #{config.CHAN} :{msg}\r\n".encode("utf-8"))
+
 
 # TODO add unban command
 def ban(socket, user):
@@ -24,6 +26,7 @@ def ban(socket, user):
     """
     chat(socket, f".ban {user}")
 
+
 def timeout(socket, user, seconds=600):
     """
     Time out a user
@@ -33,6 +36,7 @@ def timeout(socket, user, seconds=600):
     :return: 
     """
     chat(socket, f".timeout {user, seconds}")
+
 
 # TODO find more effective way to iterate through JSON list only once or use JSON as oplist
 # TODO review Bad Gateway as boolean
@@ -70,4 +74,3 @@ def isAllowed(user):
     :return: Bool if username is in the oplist
     """
     return user in config.oplist
-
