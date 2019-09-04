@@ -1,0 +1,29 @@
+{
+  "recurring": {
+    "frequency": 10,
+    "messages": [
+      "message1",
+      "message2",
+      "message3"
+    ]
+},
+  "general": {
+    "!command": "message",
+    "!command2": "message2"
+  },
+  "game1": {
+    "!wr": "message",
+    "!pb": "message2",
+    "!goal": "message3"
+  },
+  "game2": {
+    "!wr": "message",
+    "!pb": "message2",
+    "!goal": "message3"
+  },
+  "game3": {
+    "!wr": "message",
+    "!pb": "message2",
+    "!goal": "message3"
+  }
+}

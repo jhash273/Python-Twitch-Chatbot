@@ -4,6 +4,7 @@ import socket
 import re
 import time
 import _thread
+import json
 
 
 def main():
@@ -27,12 +28,20 @@ def main():
             username = re.search(r"\w+", response).group(0)
             message = CHAT_MSG.sub("", response)
 
+            # Open and load all chat commands
+            chat_commands = json.load(open("./commands", "r"))
+
+            if message[0] == "!":
+                message = message.split(' ', 1)
+                command = message[0]
+                message = message[1]
+
             # First generic commands pre FILE IO
-            if message.strip() == '!time':
-                utils.chat(s, "It is currently " + time.strftime("%I:%M %p %Z on %A, %B %d, %Y. "))
-            if message.strip() == "!messages" and utils.isAllowed(username):
-                utils.chat(s, "Please give me a follow on ")
-                utils.chat(s, "Support at ")
+            # if message.strip() == '!time':
+            #    utils.chat(s, "It is currently " + time.strftime("%I:%M %p %Z on %A, %B %d, %Y. "))
+            # if message.strip() == "!messages" and utils.isAllowed(username):
+            #    utils.chat(s, "Please give me a follow on ")
+            #    utils.chat(s, "Support at ")
         time.sleep(1)
 
 
